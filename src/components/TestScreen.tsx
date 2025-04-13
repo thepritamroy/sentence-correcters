@@ -15,9 +15,9 @@ const TestScreen: React.FC = () => {
 
     const getQuestions = async () => {
       try {
-        const res = await fetch('http://localhost:3000/data');
+        const res = await fetch('/data.json');
         const quizData = await res.json();
-        setQuestions(quizData.questions);
+        setQuestions(quizData.data.questions);
       }
       catch (error) {
         console.error('Error fetching questions:', error);
@@ -102,7 +102,7 @@ const TestScreen: React.FC = () => {
           question={questions[currentQuestionIndex]}
           onAnswerSubmit={handleAnswerSubmit}
           onTimeout={handleTimeout}
-          timeLimit={300}
+          timeLimit={30}
           fadeIn={displayAnimation}
           questionIndex={currentQuestionIndex}
           totalQuestions={questions.length}
