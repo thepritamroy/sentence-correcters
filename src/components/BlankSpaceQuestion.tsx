@@ -25,29 +25,13 @@ const BlankSpaceQuestion: React.FC<BlankSpaceQuestionProps> = ({
 }) => {
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
   const [availableOptions, setAvailableOptions] = useState<string[]>(question.options);
-  const [timeLeft, setTimeLeft] = useState(timeLimit);
+  // const [timeLeft, setTimeLeft] = useState(timeLimit);
 
 
   useEffect(() => {
     setSelectedOptions([]);
     setAvailableOptions(question.options);
-    setTimeLeft(timeLimit);
   }, [question, timeLimit]);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTimeLeft((prev) => {
-        if (prev <= 1) {
-          clearInterval(timer);
-          onTimeout();
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, [onTimeout]);
 
   const handleOptionSelect = (word: string) => {
     // Find the first empty slot (if any)
@@ -89,9 +73,9 @@ const BlankSpaceQuestion: React.FC<BlankSpaceQuestionProps> = ({
             {selectedOptions[index] ? 
             <button 
               onClick={() => handleBlankClick(index)}
-              className='min-w-[100px] font-bold font-mono text-[#2d9ac2] mx-1  cursor-pointer border-2 py-2 px-2 rounded-md relative  bounce h-9 flex justify-center items-center'>
+              className='min-w-[100px] font-bold font-mono text-[#291a72] mx-1  cursor-pointer border-2 py-2 px-2 rounded-md relative  bounce h-9 flex justify-center items-center hover:-translate-y-0.5 transition-all duration-300 ease-in-out'>
                 {selectedOptions[index]}
-                <span className='absolute left-0 -bottom-2 h-[1.5px] w-full bg-red-700 border-dotted border-2'></span>
+                <span className='absolute left-0 -bottom-2 h-[1.5px] w-full border-dashed border-2 border-[#949191]'></span>
             </button> 
             : '_____________'}
           </span>
@@ -113,7 +97,7 @@ const BlankSpaceQuestion: React.FC<BlankSpaceQuestionProps> = ({
         <div className="text-gray-500">
           Question {questionIndex + 1} of {totalQuestions}
         </div>
-        <Timer timeLeft={timeLeft} />
+        <Timer timeLimit={timeLimit} questionIndex={questionIndex} onTimeout={onTimeout}/>
       </div>
 
       <div className="mb-8 text-lg leading-[3.25rem]">

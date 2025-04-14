@@ -1,10 +1,33 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface TimerProps {
-  timeLeft: number;
+  timeLimit: number; // Time limit in seconds
+  onTimeout: () => void;
+  questionIndex: number;
 }
 
-const Timer: React.FC<TimerProps> = ({ timeLeft }) => {
+const Timer: React.FC<TimerProps> = ({ timeLimit,questionIndex,onTimeout }) => {
+  const [timeLeft, setTimeLeft] = useState(timeLimit);
+
+  useEffect(() => {
+    setTimeLeft(timeLimit);
+  }, [questionIndex]);
+
+    useEffect(() => {
+      const timer = setInterval(() => {
+        setTimeLeft((prev) => {
+          if (prev <= 1) {
+            clearInterval(timer);
+            onTimeout();
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+  
+      return () => clearInterval(timer);
+    }, [questionIndex]);
+
   const minutes = Math.floor(timeLeft / 60);
   const seconds = timeLeft % 60;
 
