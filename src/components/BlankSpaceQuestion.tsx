@@ -117,12 +117,12 @@ const BlankSpaceQuestion: React.FC<BlankSpaceQuestionProps> = ({
       <div className="flex justify-center">
         <button
           onClick={() => {
-            if (selectedOptions.length === question.correctAnswer.length) {
+            if (selectedOptions.length === question.correctAnswer.length && selectedOptions.indexOf('') === -1) {
               onAnswerSubmit(selectedOptions);
 
             }
           }}
-          className={`border-2 border-gray-800 px-4 py-2 rounded  ${selectedOptions.length === question.correctAnswer.length ? 'bg-blue-800 border-none text-white hover:-translate-y-1 transition-all duration-300 ease-in' : 'cursor-not-allowed opacity-75'}`}
+          className={`border-2 border-gray-800 px-4 py-2 rounded  ${selectedOptions.length === question.correctAnswer.length && selectedOptions.indexOf('') === -1 ? 'bg-blue-800 border-none text-white hover:-translate-y-1 transition-all duration-300 ease-in' : 'cursor-not-allowed opacity-75'}`}
         >
           Submit Answer
         </button>

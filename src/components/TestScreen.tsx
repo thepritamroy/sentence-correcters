@@ -102,7 +102,7 @@ const TestScreen: React.FC = () => {
           question={questions[currentQuestionIndex]}
           onAnswerSubmit={handleAnswerSubmit}
           onTimeout={handleTimeout}
-          timeLimit={300}
+          timeLimit={30}
           fadeIn={displayAnimation}
           questionIndex={currentQuestionIndex}
           totalQuestions={questions.length}
